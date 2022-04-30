@@ -1,0 +1,64 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+
+<body>
+<span>Het is nog <h1 id="days_left"></h1> dagen tot <strong>Omloop het Nieuwsblad</strong></span>
+
+<script>
+  // Here are the two dates to compare
+  var today = new Date();
+  var date_today= today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date_omloop = '2023-02-25';
+
+  // First we split the values to arrays date1[0] is the year, [1] the month and [2] the day
+  date1 = date_today.split('-');
+  date2 = date_omloop.split('-');
+
+  // Now we convert the array to a Date object, which has several helpful methods
+  date1 = new Date(date1[0], date1[1], date1[2]);
+  date2 = new Date(date2[0], date2[1], date2[2]);
+
+  // We use the getTime() method and get the unixtime (in milliseconds, but we want seconds, therefore we divide it through 1000)
+  date1_unixtime = parseInt(date1.getTime() / 1000);
+  date2_unixtime = parseInt(date2.getTime() / 1000);
+
+  // This is the calculated difference in seconds
+  var timeDifference = date2_unixtime - date1_unixtime;
+
+  // in Hours
+  var timeDifferenceInHours = timeDifference / 60 / 60;
+
+  // and finaly, in days :)
+  var timeDifferenceInDays = timeDifferenceInHours / 24;
+  var timeDifferenceInDays = Math.round(timeDifferenceInDays);
+
+  document.getElementById("days_left").innerHTML = timeDifferenceInDays;
+
+
+</script>
+</body>
+</html>
+<!-- IE needs 512+ bytes: https://docs.microsoft.com/archive/blogs/ieinternals/friendly-http-error-pages -->
+
