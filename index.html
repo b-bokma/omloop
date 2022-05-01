@@ -24,40 +24,53 @@
 
 
 <body>
-<span>Het is nog <h1 id="days_left"></h1> dagen tot <strong>Omloop het Nieuwsblad</strong></span>
+<span>Het is nog <h1 id="countdown"></h1> tot <strong>Omloop het Nieuwsblad *</strong></span>
+<p></br></p>
+<p></br></p>
+<p></br></p>
+
+<span><p><sub>* Ingestelde datum: 2023-02-25 09:00:00</sub></p></span>
+
+
 
 <script>
-  // Here are the two dates to compare
-  var today = new Date();
-  var date_today= today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var date_omloop = '2023-02-25';
 
-  // First we split the values to arrays date1[0] is the year, [1] the month and [2] the day
-  date1 = date_today.split('-');
-  date2 = date_omloop.split('-');
+    CountDownTimer('2023-02-25 09:00:00', 'countdown');
 
-  // Now we convert the array to a Date object, which has several helpful methods
-  date1 = new Date(date1[0], date1[1], date1[2]);
-  date2 = new Date(date2[0], date2[1], date2[2]);
+    function CountDownTimer(dt, id)
+    {
+        var end = new Date(dt);
 
-  // We use the getTime() method and get the unixtime (in milliseconds, but we want seconds, therefore we divide it through 1000)
-  date1_unixtime = parseInt(date1.getTime() / 1000);
-  date2_unixtime = parseInt(date2.getTime() / 1000);
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
 
-  // This is the calculated difference in seconds
-  var timeDifference = date2_unixtime - date1_unixtime;
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
 
-  // in Hours
-  var timeDifferenceInHours = timeDifference / 60 / 60;
+                clearInterval(timer);
+                document.getElementById(id).innerHTML = 'EXPIRED!';
 
-  // and finaly, in days :)
-  var timeDifferenceInDays = timeDifferenceInHours / 24;
-  var timeDifferenceInDays = Math.round(timeDifferenceInDays);
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
 
-  document.getElementById("days_left").innerHTML = timeDifferenceInDays;
+            document.getElementById(id).innerHTML = days + ' dagen ';
+            document.getElementById(id).innerHTML += hours + ' uur en ';
+            document.getElementById(id).innerHTML += minutes + ' minuten ';}
 
+        timer = setInterval(showRemaining, 1000);
+    }
 
 </script>
+
 </body>
 </html>
 <!-- IE needs 512+ bytes: https://docs.microsoft.com/archive/blogs/ieinternals/friendly-http-error-pages -->
